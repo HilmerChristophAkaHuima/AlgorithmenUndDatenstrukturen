@@ -8,41 +8,35 @@ namespace Blatt1
     {
         static void Main(string[] args)
         {
-            int initGroesse = 10000;
-            initGroesse = Aufgabe3Matrix.LaufzeitErmittlungAdd(1, initGroesse);
-            Console.WriteLine($"Größe bei 1 min: {initGroesse}");
-            initGroesse = Aufgabe3Matrix.LaufzeitErmittlungAdd(2, initGroesse);
-            Console.WriteLine($"Größe bei 2 min: {initGroesse}");
-            initGroesse = Aufgabe3Matrix.LaufzeitErmittlungAdd(5, initGroesse);
-            Console.WriteLine($"Größe bei 5 min: {initGroesse}");
-            initGroesse = Aufgabe3Matrix.LaufzeitErmittlungAdd(10, initGroesse);
-            Console.WriteLine($"Größe bei 10 min: {initGroesse}");
+            //int initGroesse = 1434;
+            //initGroesse = Aufgabe3Matrix.LaufzeitErmittlungAdd(1, initGroesse);
+            //Console.WriteLine($"Größe bei 1 min: {initGroesse}");
+            //initGroesse = Aufgabe3Matrix.LaufzeitErmittlungAdd(2, initGroesse);
+            //Console.WriteLine($"Größe bei 2 min: {initGroesse}");
+            //initGroesse = Aufgabe3Matrix.LaufzeitErmittlungAdd(5, initGroesse);
+            //Console.WriteLine($"Größe bei 5 min: {initGroesse}");
+            //initGroesse = Aufgabe3Matrix.LaufzeitErmittlungAdd(10, initGroesse);
+            //Console.WriteLine($"Größe bei 10 min: {initGroesse}");
 
-            Aufgabe3Matrix a = new Aufgabe3Matrix(1000, 1000);
-            a.RandomFill();
-            //a.Print();
+            //initGroesse = 1434;
+            //initGroesse = Aufgabe3Matrix.LaufzeitErmittlungMult(1, initGroesse);
+            //Console.WriteLine($"Größe bei 1 min: {initGroesse}");
+            //initGroesse = Aufgabe3Matrix.LaufzeitErmittlungMult(2, initGroesse);
+            //Console.WriteLine($"Größe bei 2 min: {initGroesse}");
+            //initGroesse = Aufgabe3Matrix.LaufzeitErmittlungMult(5, initGroesse);
+            //Console.WriteLine($"Größe bei 5 min: {initGroesse}");
+            //initGroesse = Aufgabe3Matrix.LaufzeitErmittlungMult(10, initGroesse);
+            //Console.WriteLine($"Größe bei 10 min: {initGroesse}");
 
-            Console.WriteLine();
-            Aufgabe3Matrix b = new Aufgabe3Matrix(1000, 1000);
-            b.RandomFill();
-            //b.Print();
+            //SiebDesEratosthenes(100000);
 
-            Console.WriteLine();
-            Aufgabe3Matrix c = a.Add(b);
-            //c.Print();
-
-            //Console.WriteLine();
-            //Aufgabe3Matrix d = a.Mult(b);
-            //d.Print();
-
-            //Primzahlen(100);
-
-            //var a = 800000000;
-            //var b = 400000000;
-            //Console.WriteLine($"Für a = {a} und b = {b}");
-            //Console.WriteLine($"ggT: {GroessterGemeinsamerTeiler(a, b)}");
-            //Console.WriteLine($"kgV: {KleinsterGemeinsamesVielfache(a, b)}");
-            //Console.WriteLine($"ggT Rekursive: {GroessterGemeinsamerTeilerRekursive(a, b)}");
+            var a = 12;
+            var b = 16;
+            Console.WriteLine($"Für a = {a} und b = {b}");
+            Console.WriteLine($"ggT: {GroessterGemeinsamerTeiler(a, b)}");
+            Console.WriteLine($"kgV: {KleinsterGemeinsamesVielfacheKompliziert(a, b)}");
+            Console.WriteLine($"ggT Rekursiv: {GroessterGemeinsamerTeilerRekursive(a, b)}");
+            Console.WriteLine($"kgV Rekursiv: {KleinsterGemeinsamesVielfacheKompliziertRekursiv(a, b)}");
         }
 
         /*
@@ -79,6 +73,65 @@ namespace Blatt1
             return a * b / GroessterGemeinsamerTeiler(a, b);
         }
 
+        public static int KleinsterGemeinsamesVielfacheKompliziert(int a, int b)
+        {
+            int kleiner;
+            int groesser;
+            if (a > b)
+            {
+                kleiner = b;
+                groesser = a;
+            }
+            else
+            {
+                kleiner = a;
+                groesser = b;
+            }
+
+            for (int i = kleiner; i < a * b; i += kleiner)
+            {
+                if (i % groesser == 0 && i != groesser)
+                {
+                    return i;
+                }
+            }
+
+            return a * b;
+        }
+
+        public static int KleinsterGemeinsamesVielfacheKompliziertRekursiv(int a, int b)
+        {
+            int kleiner;
+            int groesser;
+            if (a > b)
+            {
+                kleiner = b;
+                groesser = a;
+            }
+            else
+            {
+                kleiner = a;
+                groesser = b;
+            }
+
+            return KleinsterGemeinsamesVielfacheKompliziertRekursiv(a, b, groesser, kleiner);
+        }
+
+        public static int KleinsterGemeinsamesVielfacheKompliziertRekursiv(int a, int  b, int groesser, int kleiner)
+        {
+            if (kleiner % groesser == 0 && kleiner != groesser)
+            {
+                return kleiner;
+            }
+
+            if (kleiner >= a * b)
+            {
+                return kleiner * groesser;
+            }
+
+            return KleinsterGemeinsamesVielfacheKompliziertRekursiv(a, b, groesser, kleiner *2);
+        }
+
         public static void DruckTabelle(List<int> tabelle, int k)
         {
             for (int i = 1; i <= k; i++)
@@ -105,7 +158,7 @@ namespace Blatt1
             }
         }
 
-        public static void Primzahlen(int k)
+        public static void SiebDesEratosthenes(int k)
         {
             List<int> zahlen = new List<int>();
             for (int i = 2; i <= k; i++)
@@ -119,12 +172,9 @@ namespace Blatt1
             {
                 if (zahlen.Contains(i))
                 {
-                    for (int j = zahlen.FindIndex((x) => x == i)+1; j < zahlen.Count; j++)
+                    for (int j = i * 2; j <= k; j += i)
                     {
-                        if (zahlen[j] % i == 0)
-                        {
-                            zahlen.RemoveAt(j);
-                        }
+                        zahlen.Remove(j);
                     }
 
                 }

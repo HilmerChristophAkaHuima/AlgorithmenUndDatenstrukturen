@@ -152,5 +152,40 @@ namespace Blatt1
             return initGroesse;
         }
 
+        public static int LaufzeitErmittlungMult(int minuten, int initGroesse)
+        {
+            int intervall = 100;
+            Aufgabe3Matrix a;
+            Aufgabe3Matrix b;
+
+            do
+            {
+                a = new Aufgabe3Matrix(initGroesse, initGroesse);
+                a.RandomFill();
+
+                b = new Aufgabe3Matrix(initGroesse, initGroesse);
+                b.RandomFill();
+
+                a.Mult(b);
+
+                Console.WriteLine($"Akt. Größe: {initGroesse} und Laufzeit: {a.Laufzeit}");
+                if (a.Laufzeit.TotalMilliseconds - minuten * 60 * 1000 > 1000)
+                {
+                    intervall /= 2;
+                    initGroesse = initGroesse - intervall;
+                }
+                else if (a.Laufzeit.TotalMilliseconds - minuten * 60 * 1000 < 0)
+                {
+                    intervall *= 2;
+                    initGroesse = initGroesse + intervall;
+                }
+                Console.WriteLine($"Akt. Größe: {initGroesse}");
+
+
+            } while ((a.Laufzeit.TotalMilliseconds - minuten * 60 * 1000 > 1000) || (a.Laufzeit.TotalMilliseconds - minuten * 60 * 1000 < 0));
+
+            return initGroesse;
+        }
+
     }
 }
