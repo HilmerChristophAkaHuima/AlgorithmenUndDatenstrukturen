@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Blatt2
 {
@@ -6,20 +8,8 @@ namespace Blatt2
     {
         static void Main(string[] args)
         {
-            int n = 10;
-            Console.WriteLine($"Summe aller Zahlen von 1 bis {n}: {Aufgabe1(n)}");
-        }
-
-        public static int Aufgabe1(int n)
-        {
-            int summe = 0;
-            while (n > 0)
-            {
-                summe += n;
-                n--;
-            }
-
-            return summe;
+            Aufgabe1RegistermaschineUtf32 aufgabe1Registermaschine = new Aufgabe1RegistermaschineUtf32("./RegisterMaschinenCodeUtf32.txt");
+            aufgabe1Registermaschine.Run(false);
         }
     }
 }

@@ -1,0 +1,14 @@
+﻿LDK 0 // Initialisiere Summe auf 0
+STA 1 // Speicher die Summe in Register 1
+INP 2 // Lese n in Register 2
+LDA 2 // Lade n in Akkumulator für die erste Überprüfung
+JLE 13 // Prüfe ob n schon 0 ist und spring zur Ausgabe
+LDA 1 // Lese Summe in Akkumulator
+ADD 2 // Addiere n zur Summe
+STA 1 // Speicher neue Summe in über die alte in Register 1
+LDK -1 // Lade -1 in Akkumulator um später n um 1 zu verkleinern
+ADD 2 // Subtrahiere 1 von n für die nächste Iteration
+STA 2 // Speicher das neue n in Register 2
+JMP 5 // Wiederhole den Vorgang, indem ich wieder zu Schritt 3 springe
+OUT 1 // Gib die Aktuelle Summe aus, aus dem Register 1
+HLT 99
